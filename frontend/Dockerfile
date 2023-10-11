@@ -1,41 +1,37 @@
-# syntax=docker/dockerfile:1.4
-
-# Create image based on the official Node image from dockerhub
+# Define the base image for the first stage
 FROM node:lts-buster AS development
 
-# Create app directory
+# Set the working directory
 WORKDIR /usr/src/app
 
 # Copy dependency definitions
-COPY package.json /usr/src/app
-COPY package-lock.json /usr/src/app
+COPY package*.json ./
 
-# Install dependecies
-#RUN npm set progress=false \
-#    && npm config set depth 0 \
-#    && npm i install
+# Install dependencies
 RUN npm ci
 
-# Get all the code needed to run the app
-COPY . /usr/src/app
+# Copy the rest of the application code
+COPY . .
 
-# Expose the port the app runs in
-EXPOSE 3000
+# Expose the port (not mandatory)
+# EXPOSE 3000
 
-# Serve the app
-CMD ["npm", "start"]
+CMD ["npm", "run","build"]
+# Command to start the application
+CMD ["npm", "run", "start"]
 
-FROM development as dev-envs
-RUN <<EOF
-apt-get update
-apt-get install -y --no-install-recommends git
-EOF
+# Define a second stage
+FROM development AS dev-envs
 
-RUN <<EOF
-useradd -s /bin/bash -m vscode
-groupadd docker
-usermod -aG docker vscode
-EOF
-# install Docker tools (cli, buildx, compose)
-COPY --from=gloursdocker/docker / /
-CMD [ "npm", "start" ]
+# Install additional tools or perform setup here
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends git && \
+    useradd -s /bin/bash -m vscode && \
+    groupadd docker && \
+    usermod -aG docker vscode
+
+# Install Docker tools (cli, buildx, compose) if needed
+# COPY --from=gloursdocker/docker / /
+
+# Command for the second stage
+# CMD [ "npm", "start" ]

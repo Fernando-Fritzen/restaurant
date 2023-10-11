@@ -13,7 +13,7 @@ COPY . /usr/src/app
 
 EXPOSE 3000
 
-CMD [ "npm", "run", "dev" ]
+CMD [ "npm", "start"]
 
 FROM development as dev-envs
 RUN <<EOF
@@ -28,4 +28,4 @@ usermod -aG docker vscode
 EOF
 # install Docker tools (cli, buildx, compose)
 COPY --from=gloursdocker/docker / /
-CMD [ "npm", "run", "dev" ]
+CMD [ "npm", "start"]
