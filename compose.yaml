@@ -18,13 +18,15 @@ services:
 
   mongo:
     restart: always
-    image: mongo:4.2.0
+    image: mongo:5.0  # Alterei para MongoDB 6.0
     volumes:
       - ./data:/data/db
     networks:
       - express-mongo
     expose:
       - 27017
+    ports:
+      - 27017:27017
 
   frontend:
     build:
