@@ -7,24 +7,29 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - my-network
+      - aplication
 
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "3001:3001"
+      - 3001
     networks:
-      - my-network
+      - aplication
+      - mongo
 
-  mongodb:
+  mongo:
     image: mongo:latest
     ports:
-      - "27017:27017"
+      - 27017
     volumes:
       - ./mongodb-data:/data/db
+    networks:
+      - mongo
 
 networks:
-  my-network:
+  mongo:
     driver: bridge
+  aplication:
+      driver: bridge

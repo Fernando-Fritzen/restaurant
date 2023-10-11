@@ -1,31 +1,20 @@
-# syntax=docker/dockerfile:1.4
+# Use a imagem oficial do Node.js como imagem base
+FROM node:14
 
-FROM node:lts-buster-slim AS development
+# Crie um diretório de trabalho na imagem
+WORKDIR /app
 
-# Create app directory
-WORKDIR /usr/src/app
+# Copie o arquivo package.json e package-lock.json para o diretório de trabalho
+COPY package*.json ./
 
-COPY package.json /usr/src/app/package.json
-COPY package-lock.json /usr/src/app/package-lock.json
-RUN npm ci
+# Instale as dependências da aplicação
+RUN npm install
 
-COPY . /usr/src/app
+# Copie o código-fonte da aplicação para o diretório de trabalho
+COPY . .
 
-EXPOSE 3000
+# Exponha a porta em que a aplicação vai escutar
+EXPOSE 3001
 
-CMD [ "npm", "start"]
-
-FROM development as dev-envs
-RUN <<EOF
-apt-get update
-apt-get install -y --no-install-recommends git
-EOF
-
-RUN <<EOF
-useradd -s /bin/bash -m vscode
-groupadd docker
-usermod -aG docker vscode
-EOF
-# install Docker tools (cli, buildx, compose)
-COPY --from=gloursdocker/docker / /
-CMD [ "npm", "start"]
+# Comando para iniciar a aplicação
+CMD [ "node", "app.js" ]
