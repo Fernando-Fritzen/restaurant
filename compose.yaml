@@ -3,8 +3,8 @@ services:
   backend:
     restart: always
     build:
-      context: backend
-      target: development
+      context: ./backend
+      dockerfile: Dockerfile
     volumes:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules
@@ -15,10 +15,12 @@ services:
       - react-express
     expose:
       - 3001
+    ports:
+      - 3001:3001
 
   mongo:
     restart: always
-    image: mongo:5.0  # Alterei para MongoDB 6.0
+    image: mongo:latest
     volumes:
       - ./data:/data/db
     networks:
@@ -30,8 +32,8 @@ services:
 
   frontend:
     build:
-      context: frontend
-      target: development
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - 3000:3000
     stdin_open: true
