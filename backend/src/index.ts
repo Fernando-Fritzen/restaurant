@@ -21,10 +21,10 @@ app.use(express.json());
 app.use(router);
 
 server.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server is running on http://mongo:${port}`);
 });
 
-mongoose.connect('mongodb://localhost:27017')
+mongoose.connect('mongodb://mongo:27017')
   .then(() => {
     console.log('conectou no banco')
   });
