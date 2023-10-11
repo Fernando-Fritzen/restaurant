@@ -1,20 +1,30 @@
-# Use a imagem oficial do Node.js como imagem base
-FROM node:14
+# Use a imagem base que tenha suporte a apt-get (por exemplo, uma imagem base do Node.js)
+FROM node:lts-buster-slim AS development
 
-# Crie um diretório de trabalho na imagem
-WORKDIR /app
+# Etapa de desenvolvimento
+WORKDIR /usr/src/app
 
-# Copie o arquivo package.json e package-lock.json para o diretório de trabalho
-COPY package*.json ./
+# Copie os arquivos de manifesto de pacote e instale as dependências
+COPY package.json /usr/src/app/package.json
+COPY package-lock.json /usr/src/app/package-lock.json
+RUN npm i
 
-# Instale as dependências da aplicação
-RUN npm install
+# Copie o restante dos arquivos da aplicação
+COPY . /usr/src/app
 
-# Copie o código-fonte da aplicação para o diretório de trabalho
-COPY . .
-
-# Exponha a porta em que a aplicação vai escutar
+# Exponha a porta 3001
 EXPOSE 3001
 
-# Comando para iniciar a aplicação
-CMD [ "node", "app.js" ]
+# Comando para iniciar sua aplicação (por exemplo, node.js)
+CMD [ "npm", "run", "dev"]
+
+# Crie uma nova etapa para configurações de desenvolvimento
+FROM development AS dev-envs
+
+# Instale o Git e outras ferramentas
+RUN apt-get update && apt-get install -y --no-install-recommends git
+
+# Crie um novo usuário e grupo
+RUN useradd -s /bin/bash -m vscode
+RUN groupadd docker
+RUN usermod -aG docker vscode

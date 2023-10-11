@@ -20,13 +20,12 @@ services:
       - mongo
 
   mongo:
+    container_name: mongo
     image: mongo:latest
     ports:
-      - 27017
-    volumes:
-      - ./mongodb-data:/data/db
+      - "27017:27017"
     networks:
-      - mongo
+      - my-network
 
 networks:
   mongo:
