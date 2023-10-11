@@ -1,37 +1,20 @@
-# Define the base image for the first stage
-FROM node:lts-buster AS development
+# Use an official Node.js runtime as a parent image
+FROM node:16
 
-# Set the working directory
+# Set the working directory inside the container
 WORKDIR /usr/src/app
 
-# Copy dependency definitions
+# Copy the package.json and package-lock.json (if applicable) to the working directory
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci
+# Install project dependencies
+RUN npm install
 
-# Copy the rest of the application code
+# Copy the rest of the application code to the working directory
 COPY . .
 
-# Expose the port (not mandatory)
-# EXPOSE 3000
+# Expose the port that your Vite app will run on (usually 3000 by default)
+EXPOSE 3000
 
-CMD ["npm", "run","build"]
-# Command to start the application
+# Define the command to start your Vite application
 CMD ["npm", "run", "start"]
-
-# Define a second stage
-FROM development AS dev-envs
-
-# Install additional tools or perform setup here
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends git && \
-    useradd -s /bin/bash -m vscode && \
-    groupadd docker && \
-    usermod -aG docker vscode
-
-# Install Docker tools (cli, buildx, compose) if needed
-# COPY --from=gloursdocker/docker / /
-
-# Command for the second stage
-# CMD [ "npm", "start" ]
