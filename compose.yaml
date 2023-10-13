@@ -1,6 +1,7 @@
 version: '3'
 services:
   frontend:
+    container_name: frontend
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -10,11 +11,12 @@ services:
       - application
 
   backend:
+    container_name: backend
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - 3001
+      - "3001:3001"
     networks:
       - application
 
