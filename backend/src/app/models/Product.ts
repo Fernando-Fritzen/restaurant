@@ -11,7 +11,7 @@ export const Product = model('Product', new Schema({
   },
   imagePath: {
     type: String,
-    required: true
+    required: false
   },
   price: {
     type: Number,
@@ -32,7 +32,7 @@ export const Product = model('Product', new Schema({
   },
   category: {
     type: Schema.Types.ObjectId,
-    required: true,
+    required: false,
     ref: 'Category',
   }
 }));

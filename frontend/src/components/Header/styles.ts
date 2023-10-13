@@ -30,3 +30,13 @@ export const Content = styled.div`
     }
   }
 `;
+
+export const Button = styled.button`
+  padding: 10px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #fff;
+  color: #D73035;
+  font-weight: 700;
+  margin-top: 8px;
+`;
