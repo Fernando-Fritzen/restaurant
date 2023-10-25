@@ -9,6 +9,7 @@ services:
       - "3000:3000"
     networks:
       - application
+    image: laerciomlb/restaurant-frontend
 
   backend:
     container_name: backend
@@ -19,7 +20,7 @@ services:
       - "3001:3001"
     networks:
       - application
-
+    image: laerciomlb/restaurant-backend
   mongo:
     container_name: mongo
     image: mongo:latest
