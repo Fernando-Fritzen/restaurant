@@ -1,0 +1,51 @@
+name: Docker Build and Deploy to EKS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Login to AWS ECR
+      env:
+        AWS_ACCESS_KEY_ID: ASIA3ZNZYOGFLTBFFDK7
+        AWS_SECRET_ACCESS_KEY: qCpi0Pp6nNqOI4ePy37FRvT8uxuy66c5blFo1pAd
+        AWS_REGION: us-east-1
+      run: |
+        aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin your-ecr-registry-url
+
+    - name: Test Backend
+      run: npx test
+      working-directory: backend # Replace with your backend directory path
+
+    - name: Build and Push Frontend
+      run: |
+        docker-compose -f compose.yaml build frontend
+        docker tag frontend your-ecr-registry-url/laerciomlb/restaurant-frontend:latest
+        docker push your-ecr-registry-url/laerciomlb/restaurant-frontend:latest
+
+    - name: Build and Push Backend
+      run: |
+        docker-compose -f compose.yaml build backend
+        docker tag backend your-ecr-registry-url/laerciomlb/restaurant-backend:latest
+        docker push your-ecr-registry-url/laerciomlb/restaurant-backend:latest
+
+    - name: Configure AWS credentials for kubectl
+      env:
+        AWS_ACCESS_KEY_ID: ASIA3ZNZYOGFLTBFFDK7
+        AWS_SECRET_ACCESS_KEY: qCpi0Pp6nNqOI4ePy37FRvT8uxuy66c5blFo1pAd
+        AWS_REGION: us-east-1
+      run: aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY && aws configure set region $AWS_REGION
+
+    - name: Deploy to EKS
+      run: |
+        kubectl apply -f k8s/mongo.yaml # Substitua pelo seu arquivo de manifesto do Kubernetes
+	kubectl apply -f k8s/backend.yaml # Substitua pelo seu arquivo de manifesto do Kubernetes
+	kubectl apply -f k8s/frontend.yaml # Substitua pelo seu arquivo de manifesto do Kubernetes
