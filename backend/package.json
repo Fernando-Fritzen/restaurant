@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "dev": "nodemon src/index.ts",
-    "start": "node dist"
+    "start": "node dist",
+    "test": "npx jest"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.23.2",
