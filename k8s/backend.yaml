@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: laerciomlb/restaurant-backend:latest
+        image: 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-backend:latest
         ports:
         - containerPort: 3001
 ---

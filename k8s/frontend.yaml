@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: laerciomlb/restaurant-frontend:latest
+        image: 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-frontend
         ports:
         - containerPort: 3000
 ---
