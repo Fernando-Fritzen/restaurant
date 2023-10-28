@@ -28,6 +28,7 @@ jobs:
 
   frontend:
     runs-on: ubuntu-latest
+    needs: backend
 
     steps:
     - name: Checkout código
