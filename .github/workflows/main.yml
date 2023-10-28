@@ -46,6 +46,4 @@ jobs:
 
     - name: Deploy to EKS
       run: |
-        kubectl apply -f k8s/mongo.yaml # Substitua pelo seu arquivo de manifesto do Kubernetes
-	kubectl apply -f k8s/backend.yaml # Substitua pelo seu arquivo de manifesto do Kubernetes
-	kubectl apply -f k8s/frontend.yaml # Substitua pelo seu arquivo de manifesto do Kubernetes
+        kubectl apply -f k8s/mongo.yaml | kubectl apply -f k8s/backend.yaml | kubectl apply -f k8s/frontend.yaml
