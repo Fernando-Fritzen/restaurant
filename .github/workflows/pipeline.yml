@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  backend:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,10 +18,21 @@ jobs:
       with:
         node-version: 18
 
-    - name: Instalar dependências
+    - name: Instalar dependências do backend
       working-directory: ./backend
       run: npm install
 
-    - name: Executar testes
+    - name: Executar testes do backend
       working-directory: ./backend
       run: npm run test
+
+  frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v2
+
+    - name: Instalar dependências do frontend
+      working-directory: ./frontend
+      run: npm install
