@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f /mnt/c/Users/lbubi/Documents/GitHub/restaurant/compose.yaml
+    kompose.version: 1.31.2 (a92241f79)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: backend
+  name: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: backend
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f /mnt/c/Users/lbubi/Documents/GitHub/restaurant/compose.yaml
+        kompose.version: 1.31.2 (a92241f79)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/restaurant-application: "true"
+        io.kompose.service: backend
+    spec:
+      containers:
+        - image: 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-backend:latest
+          name: backend
+          ports:
+            - containerPort: 3001
+              hostPort: 3001
+              protocol: TCP
+          resources: {}
+      restartPolicy: Always
+status: {}

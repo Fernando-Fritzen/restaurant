@@ -2,7 +2,7 @@ version: '3'
 services:
   frontend:
     container_name: frontend
-    image: laerciomlb/restaurant-frontend:latest
+    image: 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-frontend
     ports:
       - "3000:3000"
     networks:
@@ -10,7 +10,7 @@ services:
 
   backend:
     container_name: backend
-    image: laerciomlb/restaurant-backend:latest
+    image: 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-backend:latest
     ports:
       - "3001:3001"
     networks:
