@@ -37,3 +37,39 @@ jobs:
     - name: Instalar dependências do frontend
       working-directory: ./frontend
       run: npm install
+  build_backend_docker_image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v2
+
+    - name: Login no Docker Hub
+      run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    - name: Build da imagem Docker do backend
+      working-directory: ./backend
+      run: |
+        docker build -t your-username/backend:latest .
+        docker push your-username/backend:latest
+
+  build_docker_images:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout código
+      uses: actions/checkout@v2
+
+    - name: Build da imagem Docker do frontend
+      working-directory: ./frontend
+      run: |
+        docker build -t 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-frontend:latest .
+
+    - name: Build da imagem Docker do backend
+      working-directory: ./backend
+      run: |
+        docker build -t 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-backend:latest .  
+
+
+
+      
