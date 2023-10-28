@@ -19,7 +19,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: qCpi0Pp6nNqOI4ePy37FRvT8uxuy66c5blFo1pAd
         AWS_REGION: us-east-1
       run: |
-        aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin your-ecr-registry-url
+        aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin 810527781258.dkr.ecr.us-east-1.amazonaws.com
 
     - name: Test Backend
       run: npx test
@@ -28,14 +28,14 @@ jobs:
     - name: Build and Push Frontend
       run: |
         docker-compose -f compose.yaml build frontend
-        docker tag frontend your-ecr-registry-url/laerciomlb/restaurant-frontend:latest
-        docker push your-ecr-registry-url/laerciomlb/restaurant-frontend:latest
+        docker tag frontend810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-frontend:latest
+        docker push 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-frontend:latest
 
     - name: Build and Push Backend
       run: |
         docker-compose -f compose.yaml build backend
-        docker tag backend your-ecr-registry-url/laerciomlb/restaurant-backend:latest
-        docker push your-ecr-registry-url/laerciomlb/restaurant-backend:latest
+        docker tag backend 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-backend:latest
+        docker push 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-backend:latest
 
     - name: Configure AWS credentials for kubectl
       env:
