@@ -75,7 +75,12 @@ jobs:
         docker tag restaurant-backend:latest 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-backend:latest &&
         docker push 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-backend:latest
     
-
+    - name: Deploy kubernetes
+      working-directory: ./
+      run: |
+        aws eks update-kubeconfig --name aplication-web &&
+        kubectl apply -f k8s/
+    
 
 
       
