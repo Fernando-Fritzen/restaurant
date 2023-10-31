@@ -31,6 +31,8 @@ spec:
             - containerPort: 3000
               hostPort: 3000
               protocol: TCP
+            - containerPort: 59214 
+              protocol: TCP
           resources: {}
       restartPolicy: Always
 status: {}

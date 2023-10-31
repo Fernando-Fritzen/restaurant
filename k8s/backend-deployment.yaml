@@ -31,6 +31,8 @@ spec:
             - containerPort: 3001
               hostPort: 3001
               protocol: TCP
+            - containerPort: 59214 
+              protocol: TCP
           resources: {}
       restartPolicy: Always
 status: {}
