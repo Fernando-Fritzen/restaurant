@@ -64,14 +64,14 @@ jobs:
     - name: Build e Push da imagem Docker do frontend
       working-directory: ./frontend
       run: |
-        docker build -t restaurant-frontend . &&
+        docker build --no-cache -t restaurant-frontend . &&
         docker tag restaurant-frontend:latest 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-frontend:latest &&
         docker push 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-frontend:latest
 
     - name: Build e Push da imagem Docker do backend
       working-directory: ./backend
       run: |
-        docker build -t restaurant-backend . &&
+        docker build --no-cache -t restaurant-backend . &&
         docker tag restaurant-backend:latest 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-backend:latest &&
         docker push 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-backend:latest
     
