@@ -37,7 +37,7 @@ export function ShoppingCart({ visible, cartItems, onClose, selectAction }: Shop
             {cartItems.map(({product, quantity }) => (
               <div className="item" key={`${product}-${quantity}`}>
                 <img
-                  src={`http://localhost:3001/uploads/${product.imagePath ?? 'not-found'}`}
+                  src={`http://ab5297476bb184945a35c8195e2ed33a-1703732009.us-east-1.elb.amazonaws.com:3001/uploads/${product.imagePath ?? 'not-found'}`}
                   alt={product.name}
                   width="56"
                   height="28.51"

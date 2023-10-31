@@ -25,7 +25,7 @@ mongoose.connect('mongodb://mongo:27017')
     app.use(router);
 
     server.listen(port, () => {
-      console.log(`Server is running on http://localhost:${port}`);
+      console.log(`Server is running on http://backend:${port}`);
     });
 
     initializeDatabase();
