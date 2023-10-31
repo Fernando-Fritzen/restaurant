@@ -48,9 +48,9 @@ jobs:
       
     - name: Configure AWS credentials for kubectl
       env:
-        AWS_ACCESS_KEY_ID: ASIA3ZNZYOGFFVBPTLI3
-        AWS_SECRET_ACCESS_KEY: 3Kbd228mBQGYHYU5K83x819lWkqEdVgv+n/g6hK5
-        AWS_SESSION_TOKEN: FwoGZXIvYXdzEJn//////////wEaDNzrV73uvdN2KKRZAiLLAcwLRFjIsjJ7VEMB6DQQvudQ0JFJYmSoH17UyxzFB4C/j0YQcRpAxf6/cRNGfEoQyMCsP0ENUBS/JnpjuLpuDxXa/ZLVDqWa/IoWwV49YyhYHbA63aKpkWkq4z6ts8TXgIqJzbymu5gWw/Uikwx4iB72un9l6kPtn7MEoi0Y34UEsS1rllbIz3HGrBoHKvHSFhxN59OyPBnwMTEXeZK0y5G+9JC2ASvE4si6UBa0/TICW++X1QdUXUjr4vMAk4t/glOs4hefUf04xwD8KJq79qkGMi3wnCz4Rmh6IwsW4E/oKXjYDVMtGJdCoGJEWk/hwubbo5TgVOFpwRGFucFbAxI=
+        AWS_ACCESS_KEY_ID: ASIA3ZNZYOGFETWVIW5C
+        AWS_SECRET_ACCESS_KEY: qrdent+TkdQqA5U8DWsV/ru8NefBkdlryVTwb3pN
+        AWS_SESSION_TOKEN: FwoGZXIvYXdzEN///////////wEaDLlAq+WYB6LuFn1aACLLASDavV3e9QRQmHYo5qEVT3LeuKBoALJBLhbN4uzhFLlvSay4fW9YL2L7ibqAPa/tmPaRrzguc+WUkiEbYKksZ/TT8bgnxdz3jcq9UqpXx6T00M1OPwC3WJ10DdDSyzV0mL/LbtWgTEj97AEIgaxXQ9SN0frhHfS2Z6u7GUlTB9gIaAQYWWTKi9yXRAlnqLgkBJB1ce1J5eRNMMEq7JgrAepRVSl0RoE+oBayPeZOfKyl+AnJxnLl3DtVe0uWvwj6UaNs6lBCHPhUMBAOKLbshaoGMi3dVwvxFw/7Q26mS8qEG3WXuV6+thP2lt0snOjcKl/NQqHMhvKqLanHrpw3QOI=
         AWS_REGION: us-east-1
       run: aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY && aws configure set aws_session_token $AWS_SESSION_TOKEN && aws configure set region $AWS_REGION
     
