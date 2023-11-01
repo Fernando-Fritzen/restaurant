@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - main
+env:
+  AWS_AKI: ${{secrets.AWS_ACCESS_KEY_ID}}
+  AWS_SAK: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+  AWS_ST: ${{secrets.AWS_SESSION_TOKEN}}
+  AWS_R: ${{secrets.AWS_REGION}}
+  AWS_U_ECR: ${{secrets.AWS_USER_ECR}} 
 
 jobs:
   backend:
@@ -47,24 +53,24 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Configure AWS credentials for kubectl
-      run: aws configure set aws_access_key_id ${{secrets.AWS_ACCESS_KEY_ID}} && aws configure set aws_secret_access_key ${{secrets.AWS_SECRET_ACCESS_KEY}} && aws configure set aws_session_token ${{secrets.AWS_SESSION_TOKEN}} && aws configure set region ${{secrets.AWS_REGION}}
+      run: aws configure set aws_access_key_id $AWS_AKI && aws configure set aws_secret_access_key $AWS_SAK && aws configure set aws_session_token $AWS_ST && aws configure set region $AWS_R
     
     - name: Configure AWS credentials for kubectl        
-      run: aws ecr get-login-password --region ${{secrets.AWS_REGION}} | docker login --username AWS --password-stdin ${{secrets.AWS_USER_ECR}}
+      run: aws ecr get-login-password --region $AWS_R | docker login --username AWS --password-stdin $AWS_U_ECR
     
     - name: Build e Push da imagem Docker do frontend
       working-directory: ./frontend
       run: |
         docker build -t restaurant-frontend . &&
-        docker tag restaurant-frontend:latest ${{secrets.AWS_USER_ECR}}/restaurant-frontend:latest &&
-        docker push ${{secrets.AWS_USER_ECR}}/restaurant-frontend:latest
+        docker tag restaurant-frontend:latest $AWS_U_ECR/restaurant-frontend:latest &&
+        docker push $AWS_U_ECR/restaurant-frontend:latest
 
     - name: Build e Push da imagem Docker do backend
       working-directory: ./backend
       run: |
         docker build -t restaurant-backend . &&
-        docker tag restaurant-backend:latest ${{secrets.AWS_USER_ECR}}/restaurant-backend:latest &&
-        docker push ${{secrets.AWS_USER_ECR}}/restaurant-backend:latest
+        docker tag restaurant-backend:latest $AWS_U_ECR/restaurant-backend:latest &&
+        docker push $AWS_U_ECR/restaurant-backend:latest
     
     - name: Deploy kubernetes
       working-directory: ./
