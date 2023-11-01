@@ -47,33 +47,24 @@ jobs:
       uses: actions/checkout@v2
       
     - name: Configure AWS credentials for kubectl
-      env:
-        AWS_ACCESS_KEY_ID: ASIA3ZNZYOGFETWVIW5C
-        AWS_SECRET_ACCESS_KEY: qrdent+TkdQqA5U8DWsV/ru8NefBkdlryVTwb3pN
-        AWS_SESSION_TOKEN: FwoGZXIvYXdzEN///////////wEaDLlAq+WYB6LuFn1aACLLASDavV3e9QRQmHYo5qEVT3LeuKBoALJBLhbN4uzhFLlvSay4fW9YL2L7ibqAPa/tmPaRrzguc+WUkiEbYKksZ/TT8bgnxdz3jcq9UqpXx6T00M1OPwC3WJ10DdDSyzV0mL/LbtWgTEj97AEIgaxXQ9SN0frhHfS2Z6u7GUlTB9gIaAQYWWTKi9yXRAlnqLgkBJB1ce1J5eRNMMEq7JgrAepRVSl0RoE+oBayPeZOfKyl+AnJxnLl3DtVe0uWvwj6UaNs6lBCHPhUMBAOKLbshaoGMi3dVwvxFw/7Q26mS8qEG3WXuV6+thP2lt0snOjcKl/NQqHMhvKqLanHrpw3QOI=
-        AWS_REGION: us-east-1
-      run: aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID && aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY && aws configure set aws_session_token $AWS_SESSION_TOKEN && aws configure set region $AWS_REGION
+      run: aws configure set aws_access_key_id ${{secrets.AWS_ACCESS_KEY_ID}} && aws configure set aws_secret_access_key ${{secrets.AWS_SECRET_ACCESS_KEY}} && aws configure set aws_session_token ${{secrets.AWS_SESSION_TOKEN}} && aws configure set region ${{secrets.AWS_REGION}}
     
-    - name: Configure AWS credentials for kubectl
-      env:
-        AWS_REGION: us-east-1
-        AWS_USER_ECR: 810527781258.dkr.ecr.us-east-1.amazonaws.com
-        
-      run: aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_USER_ECR
+    - name: Configure AWS credentials for kubectl        
+      run: aws ecr get-login-password --region ${{secrets.AWS_REGION}} | docker login --username AWS --password-stdin ${{secrets.AWS_USER_ECR}}
     
     - name: Build e Push da imagem Docker do frontend
       working-directory: ./frontend
       run: |
         docker build -t restaurant-frontend . &&
-        docker tag restaurant-frontend:latest 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-frontend:latest &&
-        docker push 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-frontend:latest
+        docker tag restaurant-frontend:latest ${{secrets.AWS_USER_ECR}}/restaurant-frontend:latest &&
+        docker push ${{secrets.AWS_USER_ECR}}/restaurant-frontend:latest
 
     - name: Build e Push da imagem Docker do backend
       working-directory: ./backend
       run: |
         docker build -t restaurant-backend . &&
-        docker tag restaurant-backend:latest 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-backend:latest &&
-        docker push 810527781258.dkr.ecr.us-east-1.amazonaws.com/restaurant-backend:latest
+        docker tag restaurant-backend:latest ${{secrets.AWS_USER_ECR}}/restaurant-backend:latest &&
+        docker push ${{secrets.AWS_USER_ECR}}/restaurant-backend:latest
     
     - name: Deploy kubernetes
       working-directory: ./
