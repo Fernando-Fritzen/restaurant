@@ -119,5 +119,5 @@ jobs:
     - name: Deploy Ansible
       working-directory: ./ansible
       run: |
-        ansible-playbook -i inventario -l "$INSTANCE_IP" site.yml
+        ansible-playbook -i inventario -l "${{ needs.configs_aws_config_build_docker_and_deploy.outputs.instance_ip }}" site.yml
 
