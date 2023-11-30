@@ -5,11 +5,11 @@ on:
     branches:
       - main
 env:
-  AWS_AKI: ${{secrets.AWS_ACCESS_KEY_ID}}
-  AWS_SAK: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-  AWS_ST: ${{secrets.AWS_SESSION_TOKEN}}
-  AWS_R: ${{secrets.AWS_REGION}}
-  AWS_U_ECR: ${{secrets.AWS_USER_ECR}} 
+  AWS_AKI: ASIA4CNEIWXIUA3ZEDJA
+  AWS_SAK: QilTPGxTKWQVvmY6I8Yy2DWhYHDzjImdL0xIULbx
+  AWS_ST: FwoGZXIvYXdzEKb//////////wEaDPjwx5hv8ecw694k3CLMAdLEhsWEbUU6h0DEuQb3RZPWJwsAPO71exIe61zBNo11g5AKB6DuDBAye+0ryCya4U2y3Avj3q/vyCydHy2AVBcSvRH95P7PWK9Cnc4852ORCwy3ca70a/uTLbAIPEE7fGrk5a69uwCT34h2hzbQIbOnTc2a2LhRaEEQGU8diNiazrlNTdIli+aDljGLuHxu0XSXm3mY70QN47JoYuMaVhxcf1+CoSCyCV7SCJIXgpaL6nNvKNrflVy/YZeMOTxHeR9EBmyd8xSVwZ6wCii2/6GrBjItSeuL5M0emlLGolZGWQIkr0HhN/bJHCOONbpXC0G6fKipcxf8gekIJhBo5OdK
+  AWS_R: us-east-1
+  AWS_U_ECR: 829810062801.dkr.ecr.us-east-1.amazonaws.com 
 
 jobs:
   backend:
@@ -52,7 +52,7 @@ jobs:
     - name: Checkout código
       uses: actions/checkout@v2
       
-    - name: Configure AWS credentials for kubectl
+    - name: Configure AWS credentials for terraform
       run: aws configure set aws_access_key_id $AWS_AKI && aws configure set aws_secret_access_key $AWS_SAK && aws configure set aws_session_token $AWS_ST && aws configure set region $AWS_R
     
     - name: Configure AWS credentials for kubectl        
@@ -71,12 +71,14 @@ jobs:
         docker build -t restaurant-backend . &&
         docker tag restaurant-backend:latest $AWS_U_ECR/restaurant-backend:latest &&
         docker push $AWS_U_ECR/restaurant-backend:latest
-    
-    - name: Deploy kubernetes
+                
+    - name: Setup terraform
+      uses: hashicorp/setup-terraform@v2.0.3
+
+    - name: Create infrastructure to terraform
       working-directory: ./
       run: |
-        aws eks update-kubeconfig --name aplication-web &&
-        kubectl apply -f k8s/
+        terraform apply -auto-approve
     
 
 
