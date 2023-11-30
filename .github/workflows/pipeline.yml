@@ -90,12 +90,11 @@ jobs:
       run: |
         terraform apply -auto-approve
 
-    - name: Buscar IP da instancia ec2
-      id: get_ip
-      run: echo "::set-output name=public_ip::$(terraform output -raw public_ip)"
-
-    - name: Use EC2 Public IP
-      run: echo "The EC2 instance IP is ${{ steps.get_ip.outputs.public_ip }}"
+    - name: Get Terraform Output
+      run: |
+        INSTANCE_IP=$(terraform output -raw instance_ip)
+        echo "Instance IP: $INSTANCE_IP"
+        echo "INSTANCE_IP=$INSTANCE_IP" >> $GITHUB_ENV
         
     - name: Setup SSH
       working-directory: ./
@@ -117,5 +116,5 @@ jobs:
     - name: Deploy Ansible
       working-directory: ./ansible
       run: |
-        ansible-playbook -i inventario -l "${{ steps.get_ip.outputs.public_ip }}" site.yml
+        ansible-playbook -i inventario -l "$INSTANCE_IP" site.yml
 
