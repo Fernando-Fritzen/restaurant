@@ -103,7 +103,6 @@ jobs:
         mkdir -p ~/.ssh
         echo "$DEPLOY_KEY" > ~/.ssh/id_rsa.pem
         chmod 600 ~/.ssh/id_rsa.pem
-        ssh-keyscan -t rsa SEU_SERVIDOR >> ~/.ssh/known_hosts
 
     - name: Setup ansible
       uses: ansible/ansible-lint@v6.22.1
