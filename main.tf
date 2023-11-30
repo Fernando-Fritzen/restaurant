@@ -10,9 +10,6 @@ resource "aws_instance" "ec2_instance" {
   user_data = <<-EOF
               #!/bin/bash
               sudo apt-get update -y
-              sudo amazon-linux-extras install docker -y
-              sudo service docker start
-              sudo usermod -aG docker ec2-user
               EOF
 
   tags = {
