@@ -85,6 +85,13 @@ jobs:
       working-directory: ./
       run: |
         terraform apply -auto-approve
+
+    - name: Buscar IP da instancia ec2
+      id: get_ip
+      run: echo "::set-output name=public_ip::$(terraform output -raw public_ip)"
+
+    - name: Use EC2 Public IP
+      run: echo "The EC2 instance IP is ${{ steps.get_ip.outputs.public_ip }}"
         
     - name: Setup SSH
       working-directory: ./
@@ -94,12 +101,11 @@ jobs:
         chmod 600 ~/.ssh/id_rsa.pem
         ssh-keyscan -t rsa SEU_SERVIDOR >> ~/.ssh/known_hosts
 
+    - name: Setup ansible
+      uses: ansible/ansible-lint@v6.22.1
+        
     - name: Deploy Ansible
       working-directory: ./ansible
       run: |
-        ansible-playbook -i inventario site.yml
+        ansible-playbook -i inventario -l "${{ steps.get_ip.outputs.public_ip }}" site.yml
 
-    
-
-
-      
