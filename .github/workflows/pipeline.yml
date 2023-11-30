@@ -80,6 +80,11 @@ jobs:
       run: |
         terraform init
         
+    - name: Terraform destroy
+      working-directory: ./
+      run: |
+        terraform destroy -auto-approve
+        
     - name: Create terraform infrastructure
       working-directory: ./
       run: |
