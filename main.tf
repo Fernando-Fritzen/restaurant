@@ -24,7 +24,7 @@ resource "aws_lb" "restaurant" {
   name               = "restaurant-lb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = ["sg-0cc9ddc28912cb500"]
+  security_groups    = ["sg-0f8bd8335c1b251b8"]
   subnets            = ["subnet-027880a4c78919765","subnet-0526d313d4125aa4b"]
 
   enable_deletion_protection = false
