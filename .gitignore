@@ -9,3 +9,4 @@ frontend/dist
 *.exe
 terraform.tfstate
 terraform.tfstate.backup
+*.info

@@ -19,30 +19,11 @@ resource "aws_instance" "ec2_instance" {
   }
 }
 
-resource "aws_security_group" "sg" {
-  name        = "allow-communication-sg"
-  description = "Security group to allow communication between EC2 and Load Balancer"
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = -1
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
 resource "aws_lb" "restaurant" {
   name               = "restaurant-lb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.sg.id]
+  security_groups    = ["sg-0f8bd8335c1b251b8"]
   subnets            = ["subnet-027880a4c78919765","subnet-0526d313d4125aa4b"]
 
   enable_deletion_protection = false
@@ -84,4 +65,3 @@ resource "aws_lb_listener_rule" "restaurant" {
     }
   }
 }
-
