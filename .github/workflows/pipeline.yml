@@ -75,10 +75,16 @@ jobs:
     - name: Setup terraform
       uses: hashicorp/setup-terraform@v2.0.3
 
-    - name: Create infrastructure to terraform
+    - name: Init terraform
+      working-directory: ./
+      run: |
+        terraform init
+        
+    - name: Create terraform infrastructure
       working-directory: ./
       run: |
         terraform apply -auto-approve
+
     
 
 
