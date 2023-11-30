@@ -5,6 +5,7 @@ provider "aws" {
 resource "aws_instance" "ec2_instance" {
   ami           = "ami-016485166ec7fa705"
   instance_type = "t4g.medium"
+  key_name = ua-lab
   
   user_data = <<-EOF
               #!/bin/bash
