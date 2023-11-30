@@ -4,3 +4,8 @@ frontend/node_modules
 app/dist
 backend/dist
 frontend/dist
+*.hcl
+*.0_x5
+*.exe
+terraform.tfstate
+terraform.tfstate.backup
