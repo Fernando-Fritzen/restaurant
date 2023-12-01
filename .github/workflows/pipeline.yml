@@ -110,14 +110,10 @@ jobs:
     - name: Get Terraform Output
       id: terraform_output
       run: |
-        INSTANCE_IP=$(terraform output public_ip)
+        - INSTANCE_IP=$(terraform output public_ip)
         - echo "[servidores]" > ansible/inventario
         - echo "$INSTANCE_IP ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa.pem" >> ansible/inventario
-        echo "::set-output name=instance_ip::$INSTANCE_IP"
+        - echo "::set-output name=instance_ip::$INSTANCE_IP"
+        - cd ansible
+        - ansible-playbook -i inventario site.yml
       shell: bash
-      
-    - name: Deploy Ansible
-      working-directory: ./ansible
-      run: |
-        ansible-playbook -i inventario site.yml
-
