@@ -9,7 +9,7 @@ export function Orders() {
   const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
-    const socket = socketIo('http://backend:59214', {
+    const socket = socketIo('http://localhost:59214', {
       transports: ['websocket'],
     });
 
