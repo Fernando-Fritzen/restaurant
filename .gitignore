@@ -10,3 +10,4 @@ frontend/dist
 terraform.tfstate
 terraform.tfstate.backup
 *.info
+ansible/keys/ua-lab.pem

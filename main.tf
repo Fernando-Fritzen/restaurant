@@ -16,16 +16,18 @@ resource "aws_instance" "ec2_instance" {
     Name = "EC2-Instance"
   }
 
-  vpc_security_group_ids = [aws_security_group.ec2_sg.id]
+  vpc_security_group_ids = [aws_security_group.ua-sg.id]
+  subnet_id = "subnet-0b472e5e05cf26e76"
 }
 
 output "public_ip" {
   value = aws_instance.ec2_instance.public_ip
 }
 
-resource "aws_security_group" "ec2_sg" {
-  name        = "ec2-sg"
+resource "aws_security_group" "ua-sg" {
+  name        = "ua-sg"
   description = "Security group for EC2 instance"
+  vpc_id = "vpc-084c64a9879223af3"
 
   ingress {
     from_port   = 22
@@ -40,8 +42,8 @@ resource "aws_lb" "restaurant" {
   name               = "restaurant-lb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.ec2_sg.id]
-  subnets            = ["subnet-027880a4c78919765", "subnet-0526d313d4125aa4b"]
+  security_groups    = [aws_security_group.ua-sg.id]
+  subnets            = ["subnet-0b472e5e05cf26e76", "subnet-01203ee993f919c61"]
 
   enable_deletion_protection = false
 }
@@ -50,7 +52,7 @@ resource "aws_lb_target_group" "restaurant" {
   name     = "restaurant-tg"
   port     = 3000
   protocol = "HTTP"
-  vpc_id   = "vpc-07933dfe022917938"
+  vpc_id   = "vpc-084c64a9879223af3"
 
   health_check {
     path = "/"
