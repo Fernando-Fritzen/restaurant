@@ -9,7 +9,7 @@ env:
   AWS_SAK: Y0PLB+f3frxIe+tqDGxF1+/XfeViFJL/PSHGItM1
   AWS_ST: FwoGZXIvYXdzEEIaDJllNeyRRiEYUVNE5iLIAZwNI+/d68G6cWjUD3tps5sb2x9VQPIO9MO8k2vC9hajO7cTf5gLvtSk2A76UJ+pi5MXqimZKM3khfr4jEkyP+yOGfOEHJPnG+oTtESIKIUq+89yIDY6e5rM+jylsgFy2OQbv2Q1uf7XGzUp2MvYCLX7/i/Sxo468DPAsTFky6uxApLWgROu/CFVuWKSE1jvDyUBLDn4OFvbrdLnZxi4SqqqoYbl93fzVk9jRj2+ySG6OQwR83JXC2BvPppc2TtGkw0vX9xZdYMpKMCfxKsGMi2OfXpsJh+KwiKRrr1pVn3LZiglWPGYRsnx1hsW8mfGE6j3u1iHpaoEC6aMi+o=
   AWS_R: us-east-1
-  AWS_U_ECR: 994958271750.dkr.ecr.us-east-1.amazonaws.com/restaurant-backend
+  AWS_U_ECR: 994958271750.dkr.ecr.us-east-1.amazonaws.com
   DEPLOY_KEY: ${{secrets.DEPLOY_KEY}}
 
 jobs:
