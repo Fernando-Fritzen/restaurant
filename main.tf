@@ -3,10 +3,11 @@ provider "aws" {
 }
 
 resource "aws_instance" "ec2_instance" {
-  ami           = "ami-016485166ec7fa705"
-  instance_type = "t4g.medium"
+  ami           = "ami-0fc5d935ebf8bc3bc"
+  instance_type = "t3.medium"
   key_name      = "ua-lab"
-  
+  iam_instance_profile = "LabInstanceProfile"
+
   user_data = <<-EOF
     #!/bin/bash
     sudo apt-get update -y
@@ -38,49 +39,49 @@ resource "aws_security_group" "ua-sg" {
 
 }
 
-resource "aws_lb" "restaurant" {
-  name               = "restaurant-lb"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.ua-sg.id]
-  subnets            = ["subnet-0b472e5e05cf26e76", "subnet-01203ee993f919c61"]
+#resource "aws_lb" "restaurant" {
+#  name               = "restaurant-lb"
+#  internal           = false
+#  load_balancer_type = "application"
+#  security_groups    = [aws_security_group.ua-sg.id]
+#  subnets            = ["subnet-0b472e5e05cf26e76", "subnet-01203ee993f919c61"]
 
-  enable_deletion_protection = false
-}
+#  enable_deletion_protection = false
+#}
 
-resource "aws_lb_target_group" "restaurant" {
-  name     = "restaurant-tg"
-  port     = 3000
-  protocol = "HTTP"
-  vpc_id   = "vpc-084c64a9879223af3"
+#resource "aws_lb_target_group" "restaurant" {
+# name     = "restaurant-tg"
+#   port     = 3000
+#   protocol = "HTTP"
+#   vpc_id   = "vpc-084c64a9879223af3"
 
-  health_check {
-    path = "/"
-  }
-}
+#   health_check {
+#     path = "/"
+#   }
+# }
 
-resource "aws_lb_listener" "restaurant" {
-  load_balancer_arn = aws_lb.restaurant.arn
-  port              = 80
-  protocol          = "HTTP"
+# resource "aws_lb_listener" "restaurant" {
+#   load_balancer_arn = aws_lb.restaurant.arn
+#   port              = 80
+#   protocol          = "HTTP"
 
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.restaurant.arn
-  }
-}
+#   default_action {
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.restaurant.arn
+#   }
+# }
 
-resource "aws_lb_listener_rule" "restaurant" {
-  listener_arn = aws_lb_listener.restaurant.arn
+# resource "aws_lb_listener_rule" "restaurant" {
+#   listener_arn = aws_lb_listener.restaurant.arn
 
-  action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.restaurant.arn
-  }
+#   action {
+#     type             = "forward"
+#     target_group_arn = aws_lb_target_group.restaurant.arn
+#   }
 
-  condition {
-    path_pattern {
-      values = ["/"]
-    }
-  }
-}
+#   condition {
+#     path_pattern {
+#       values = ["/"]
+#     }
+#   }
+# }

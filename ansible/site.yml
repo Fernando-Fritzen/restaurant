@@ -23,7 +23,7 @@
 
     - name: Adicionar o repositório do Docker ao APT
       apt_repository:
-        repo: deb [arch=arm64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
         state: present
 
     - name: Atualizar cache do apt após adicionar o repositório do Docker
@@ -44,12 +44,29 @@
       apt:
         name: python3-pip
         state: present
+
     - name: Instalar Docker Compose
       pip:
         name: docker-compose
         executable: pip3
         state: present
 
+    - name: Instalar AWS CLI
+      ansible.builtin.command:
+        cmd: "pip3 install awscli"
+
+    - name: Fazer login no Amazon ECR
+      ansible.builtin.shell:
+        cmd: "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 994958271750.dkr.ecr.us-east-1.amazonaws.com"
+    
+    - name: adicionar usuario ao grupo Docker
+      ansible.builtin.shell:
+        cmd: "sudo usermod -aG docker $USER"
+
+    - name: restart docker 
+      ansible.builtin.shell:
+        cmd: "service docker restart"
+        
 - name: Copiar docker-compose.yml para a máquina
   hosts: servidores
   become: yes
