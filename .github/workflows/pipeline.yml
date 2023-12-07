@@ -5,11 +5,11 @@ on:
     branches:
       - main
 env:
-  AWS_AKI: ASIA4CNEIWXI7LDAG4FF
-  AWS_SAK: Cg4ZPrcyEvjqqW/otdqqse99JTnu5iCftXTxh0SO
-  AWS_ST: FwoGZXIvYXdzELD//////////wEaDEEEgWFV/3dU6Y20uSLMAbttajKeukZoLO7t6BdzcHo8bjvvFoe8nUk+x8zD3SGMRiZt4TpP9L+YB5IKUzvn5CSyGWc6LHHNqA5oX60qb8kHdNynsgI06r82xjsmBQcVVnrIe2Kb1N1bF2H7mIauQYIFVu4Nx6y51pMdUyvQwPHEjFMQKLBKYq5hEfCmhFYezKefjpwSY+gjgb4p4FppxwcGbWIydEHqY56O3KqbOpfXyoTrAIJSskkktmnHmmRoxFUtTVZxRGeitDjzMJ4Mslc2ZtFFD1fmv2EBliiZp6SrBjItCTjKHuz3uboTnTpU5YswXbKJmltvUPF1ZhhXwR1wI+gvTvyQ1bi3dA/Mga2B
-  AWS_R: us-east-1
-  AWS_U_ECR: 829810062801.dkr.ecr.us-east-1.amazonaws.com 
+  AWS_AKI: ${{secrets.AWS_ACCESS_KEY_ID}}
+  AWS_SAK: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+  AWS_ST: ${{secrets.AWS_SESSION_TOKEN}}
+  AWS_R: ${{secrets.AWS_REGION}}
+  AWS_U_ECR: ${{secrets.AWS_USER_ECR}} 
   DEPLOY_KEY: ${{secrets.DEPLOY_KEY}}
 
 jobs:
