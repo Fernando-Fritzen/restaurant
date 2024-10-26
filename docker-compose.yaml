@@ -2,7 +2,9 @@ version: '3'
 services:
   frontend:
     container_name: frontend
-    image: 829810062801.dkr.ecr.us-east-1.amazonaws.com/restaurant-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     networks:
@@ -10,7 +12,9 @@ services:
 
   backend:
     container_name: backend
-    image: 829810062801.dkr.ecr.us-east-1.amazonaws.com/restaurant-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "3001:3001"
     networks:
